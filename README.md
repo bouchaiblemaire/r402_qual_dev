@@ -169,7 +169,11 @@ Le but de l'application est de faire des statistiques sur des voitures.
 L'application dont vous lisez le Readme actuellement ne vous appartient pas (vous n'êtes pas les proprétaires du dépôt git).
 Cependant, vous pouvez télécharger ce projet sur vos machines et ensuite l'uploader vers un de vos dépôts git.
 
-Voici une vidéo de démonstration qui est suivie de la procéédure détaillée commande par commande : https://e.pcloud.link/publink/show?code=XZ3qthZaMGfUQCtTUR1zXO0O5jqnQVf5lQX
+>**Ressource de M. LEMAIRE:**
+>Voici un tutoriel vidéo qui est suivie de la procédure détaillée commande par commande :
+>
+>[Tutoriel github]( https://e.pcloud.link/publink/show?code=XZ3qthZaMGfUQCtTUR1zXO0O5jqnQVf5lQX)
+
 
 Si vous n'avez pas utilisé Github depuis un moment, il se peut que le Token qui vous permet d'accéder à Github soit périmé.
 Dans ce cas, il faudra en génbérer un autre. La procédure est indiqué ici : https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
@@ -177,7 +181,7 @@ Il faudra alors utiliser ce token à la place de votre mot de passe quand vous f
 
 Démarrer le machine de l'école sous Linux.
 
-Attention ! sur les machines de l'IUT il faut se placer sur /tmp car cela ne fonctionne pas sur les dossiers personnels.
+Attention ! sur les machines de l'IUT il faut se placer sur `/tmp` car cela ne fonctionne pas sur les dossiers personnels.
 ```
 git clone https://github.com/charroux/qualiteDeDeveloppement
 ```
@@ -216,7 +220,7 @@ Une vidéo de démonstration : https://e.pcloud.link/publink/show?code=XZIwqhZkS
 Le consultation du rapport de test ce fait ici : build/reports/tests/test/index.html
 
 ### Avec Eclipse 
-La version Eclipse de l'IUT n'ayant pas le plugin gradle, il n'est pas recommandé ee l'utiliser.
+La version Eclipse de l'IUT n'ayant pas le plugin gradle, il n'est pas recommandé de l'utiliser.
 
 ## Codage des classes de données, accès à la base de données
 
