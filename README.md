@@ -74,7 +74,7 @@ Attendre que le projet soit créé.
 > * `YY` sont deux lettes en majuscules,
 > * `ZZ`sont deux chiffres.
 
-Toute anomalie sera sigablée par une `RunTimeException` de type `IllegalStateException`.
+Toute anomalie sera signalée par une `RunTimeException` de type `IllegalStateException`.
 
 3.2. En ce qui concerne la classe de test pour la clasee métier `Voiture`
 
@@ -94,11 +94,17 @@ Lancer le programme de test (clic droit sur la classe de test)
 
 
 
-1. Créer un projet privée dans votre compte Github.
+1. Créer un projet distant privée dans votre compte github.
 
-Poussez votre code vers votre dépôt git (en indiquant l'adresse de votre projet)
+Poussez votre code vers votre dépôt git local vers votre dépôt distant github (en indiquant l'adresse de votre projet)
 
-<img src="images/pushExistingProjet.png" width="500"/>
+Exemple : 
+
+```shell
+git remote add origin https://github.com/bouchaiblmaire/tps_qual_dev.git
+git branch -M main
+git push 
+```
 
 
 Inscrivez votre enseignant comme *participant* de votre projet github.
