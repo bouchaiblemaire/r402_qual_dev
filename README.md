@@ -425,6 +425,13 @@ git branch -D newcarservice
 git push origin --delete newcarservice
 ```
 
+**3. Ce que doit faire le développeur**
+
+Mettre à jour sa branche `mail`
+
+```
+git pull
+```
 
 
 # TP 3
@@ -432,6 +439,8 @@ git push origin --delete newcarservice
 Etude du framework de test inclus dans les projets Spring boot : https://github.com/charroux/springbootest
 
 Etude du framework de test Mockito: https://github.com/charroux/mockito
+
+
 
 
 ## Présentation de l'application
