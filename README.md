@@ -34,7 +34,7 @@ Etudier l'utilisation des assertions : https://junit.org/junit5/docs/current/use
 
 
 
-# TP 1 - JUnit
+# TP 1 :  JUnit, développent et tests unitaires de la classe métier
 
 ## Création du projet
 
@@ -86,42 +86,274 @@ Lancer le programme de test (clic droit sur la classe de test)
 
 > Tous les tests doivent passer (*être vert*)
 
-## Sauvegarde de votre projet dans un dépôt Git vous appartenant
+
+# TP2 : Intégration continue, développement et tests unitaires de la classe service
+
+**Faisons le point :**  Au début de cette partie vous avez écrits et fait passé tout vos tests unitaires
+  
+Quelques exemples de tests unitaires : 
+
+<img src="images/voituretest.jpg" width="600"/>
+
+
+
+## Etape 1 : Appropriation du projet
+
+
+Vous devez vous appropier ce projet, c'est-à-dire que **vous devez le déplacer vers un dépôt Git vous appartenant**.
+
+
 
 >**Ressource de M. LEMAIRE:**
+> Support de cours concernant Git
+> [Support de cours sur Git](https://e.pcloud.link/publink/show?code=XZT45CZgsA2bvsKBefHmVhdgo3G9mlfDa3y)
 >
 >[Création d'un dépôt Git](https://e.pcloud.link/publink/show?code=XZ3qthZaMGfUQCtTUR1zXO0O5jqnQVf5lQX)
 
 
+## **Voici quelques indications :**
 
-1. Créer un projet distant privée dans votre compte github.
+1. Créer votre dépôt distant
 
-Poussez votre code vers votre dépôt git local vers votre dépôt distant github (en indiquant l'adresse de votre projet)
+<img src="images/creation_depot_distant.jpg" width="600"/>
 
-Exemple : 
+**Notes :**
+* Le dépôt doit-être privée dans le cadre de ce travail pratique.
+* Le dépôt doit-être vide car nous allons l'initialiser avec notre dépôt local
+    * ne pas cocher `Add a README file`
+    * ne pas ajouter de fichier `.gitingnore`
+   
+2. Déplacez-vous dans le dossier contenant votre projet sur votre machine
 
-```shell
-git remote add origin https://github.com/bouchaiblmaire/tps_qual_dev.git
+<img src="images/deplacement_dans_projet_local.jpg" width="1000"/>
+
+
+3. Initialiser votre dépôt distant avec votre dépôt local (ici c'est un exemple avec **mon** dépôt distant !)
+
+```
+git init
+git add .
+git commit -m "first commit"
 git branch -M main
-git push 
+git remote add origin https://github.com/bouchaiblemaire/r402_2025_qual_dev.git
+git push -u origin main
+```
+
+Si nécessaire supprimer le lien avec l'origine existante : 
+```
+git remote remove origin
+```
+
+et refaire le `git add remote`.
+
+**Affichage obtenu avec mon dépôt :**
+
+<img src="images/init_remote_guhub_repository.jpg" width="800"/>
+
+
+
+
+4. Inscrivez votre enseignant comme *participant* de votre projet github.
+
+
+## **Etape 2 : Collaborer à un projet : le concept du pull request**
+
+**Le principe :**
+
+* Quand un développeur apporte une modification au code il faut tester que son code n'est pas buggé et qu'il ne provoque pas d'erreur dans le code existant (test de non regression du code).
+
+**Règle :** Pour ne pas corrompre le code existant, **toutes modifications doit se faire dans une branche**.
+
+* Le développeur en question va pousser sa branche vers le serveur distant Git et à ce moment-là les tests (de son code et du code déjà écrit) doivent être déclenchés **automatiquement côté serveur** :
+    * Si les tests réussissent, le chef de projet (ou une personne autorisée) pourra alors fusionner les branches et les autres développeurs pourront alors télécharger la dernière version du code.
+  
+Cette procédure qui part de l'initiative du développeur et qui se termine par la fusion des branches par le chef de projet si les tests réussissent est appelée *pull request*.
+
+### Comment les test tests sont automatisées côté serveur ? 
+
+#### Github actions
+
+Côté serveur, Github peut exécuter des tâches automatiquement comme lancer les tests. Pour cela **il faut configurer une action**.
+
+
+### **En ce qui concerne un développeur de l'équipe de projet**
+
+Quand un développeur collabore à un projet il procède de la façon suivante : 
+
+1. le développeur récupère le projet sur sa machine (`git clone`)
+    * Il créer un dépot local dans sa machine
+  
+
+**Remarques :** 
+* Pour ce travail pratique vous disposez déjà du dépôt local ! 
+* Vous pouvez jouer le rôle d'un nouveau développeur à clonant le dé^pot distant dans un aitre dossier de votre machine locale.
+
+2. le développeur créé une copie du projet afin de ne pas affecter le code qui est déjà en production (`git branch` et `git checkout`)
+
+Exemple :
+
+```
+git branch newcarservice
+git checkout newcarservice
+```
+
+ou en une seule commande :
+```
+git checkout -b newcarservice
+```
+
+**Note :** Vous le ferez dans la partie *développement de la couche service*
+
+
+* Toutes modifications se font sur une branche et n'altère pas le projet principal (branche `main`)
+
+3. Le développeur travaille à débogger le code ou à développer une nouvelle fonctionnalité (`git add`, `git commit`)
+    * Dans cette étape, **toutes les modifications se font dans la branche locale**.
+  
+4. Le développeur écrit aussi les programmes de tests qui valident son travail
+   
+5. Et enfin le développeur envoie sa copie du code vers le serveur distant git pour partager ses midifications/ajouts (git push)
+
+
+
+### **En ce qui concerne le chef de projet**
+
+Le chef de projet peut alors déclencher un processus d'**intégration continue** (CI) en lançant les procédures de tests écrit par le développeur :
+> c'est le pull request. Un script va alors être déclanché sur un serveur de test. 
+
+Si les tests du développeurs sont concluants, le chef de projet peut alors décider de fusionner la copie du développeur avec la version originale (`git marge`).
+* Tous les développeurs doivent alors récupérer la mise à jour du code sur leur machine en faisant un `git pull`
+
+Et c'est là qu'on comprend le terme *pull request* qui est finalament une demande de pull faite par un développeur au chef de projet quand il a finit son travail.
+
+**En conclusion :** Dès lors que le code est testé sur les serveurs de github, le code est disponible auprès des autres développeurs de l'équipe.
+
+
+
+### Voici les étapes que nous allons effectuer pour le développement de la couche service de l'application**
+
+**A lire jusqu'au bout AVANT DE COMMENCER !**
+
+#### **A. Travail à faire par le chef de projet,  mise en place du processus d'intégration contenue**
+
+1. Connectez-vous sur votre dépôt distant en utilisant l'interface Web de Github et cliquez sur le bouton `Actions`
+
+<img src="images/mise_en_place_actions_pull_request_etape_1.jpg" width="800"/>
+
+2. Cliquez sur le bouton configure de la tuile `Java with Gradle`
+
+**Note :** Prendre soin de bien lire les informations qui sont affichées !
+
+<img src="images/mise_en_place_actions_pull_request_etape_2.jpg" width="600"/>
+
+**Lisez et interprétez les informations qui sont affichées dans le script affiché !**
+
+Cliquez sur le bouton `Commit changes`
+
+<img src="images/mise_en_place_actions_pull_request_etape_3.jpg" width="400"/>
+
+
+* Votre *action* est mis en place et est lancé 
+  * c'est à dire que tous les tests seront automatiquement lancé à chaque demande de *pull request* ! 
+* Soyez patient et interpréter les résultats et corriger les erreurs eventuelles.
+    * Pour cela cliquez sur le lien du *workflow* affichée
+
+<img src="images/mise_en_place_actions_pull_request_etape_4.jpg" width="600"/>
+
+*Indices sur quelques solutions pour corriger certaines erreurs éventuelles :*
+* Activez les *dépendances de graphes* dans la paramètres avancées de votre dépot git distant.
+* Donnez les droits d'execution au script `gradelew` et mettre à jour le dépôt distant.
+
+Dans l'exemple suivant, l'erreur de droit d'exécution sur le fichier `gradlew` a été corrigé et une autre demande de pull request a été effectuée :
+* Le chef de projet à effacé le premier workflow pour garder ke deuxime
+  
+  
+<img src="images/mise_en_place_actions_pull_request_etape_5.jpg" width="600"/>
+
+A ce point du travail pratique le `workflow`doit s'exécuter sans erreur et **tous les indicateurs doivent être vert**.
+
+
+#### **B. Travail à faire par le développeur, écriture de la couche service**
+
+Nous allons dans cette étape écrire la couche service et faire un demande de *pull request* pour rajouter cette couche au projet principal sur le serveur Git distant.
+
+Nous supposons avant de commencer cette étape que :
+* Vous avez créee et initialisé votre **dépôt distant**, une seule branche `main` existe.
+* Vous avez mis en place correctement les mécanismes d'intégration continue.
+
+Votre projet contient :
+* La classe métier `Voiture` dans le fichier java `Voiture.java`
+* La classe de tests `VoitureTest` dans le fichier java `VoitureTest.java`
+
+
+1. Créer une nouvelle branche sur votre machine locale:
+```
+git branch newcarservice
+```
+2. Se déplacer vers la nouvelle branche:
+```
+git checkout newcarservice
+```
+3. Ajouter les fonctionnalités de la couche service ainsi que les tests unitaires associés (voir plus loin *développement de la couche service*).
+   
+4. Faire passer tous les tests, ils doivent être tous vert.
+   
+5. Mettre à jour le dépôt local en *committant* les modifications :
+```
+git add .
+git commit -a -m "newcarservice"
+```
+6. Se remettre sur la branche `main` de votre dépôt local
+```
+git checkout main
+```
+7. Envoyer les changements vers GitHub :
+```
+git push -u origin newcarservice
+```
+
+**Remarque :** Une demande de *pull request* sera ouverte aytomatiquement.
+
+
+#### **C. Travail à faire le chef de projet, traiter la demande de pull request**
+
+A partir de là, vous jouez le rôle d'un chef de projet.
+
+1. Traiter le demande de *pull request*
+2. Accépter (dans le cas du travail pratique)  la demande de *pull request*
+  * la fusion de la nouvelle branche avec la branche `main` est effectuée (`git merge`)
+
+> Sur toutes les machines des développeurs (y-compris celle du développeur qui a soumis son code) afin de mettre à jour la branche main sinon le serveur Github n'acceptera pas de nouveau push au pretexte que le code n'est pas à jour
+>```
+>git pull origin main
+>```
+
+
+3. La nouvelle branche peut alors être effacée sur la machine du développeur et cell qui est chez Github :
+
+```
+git branch -D newcarservice
+```
+```
+git push origin --delete newcarservice
 ```
 
 
-Inscrivez votre enseignant comme *participant* de votre projet github.
 
-# TP2
+### **Mise en pratique !**
 
 
-## Codage d'une classe de service
+**Développement de la couche service**
 
-Coder une classe de service en implémentant l'interface  suivante :
+**1. Ce que doit faire le développeur**
+
+Coder une classe de service en implémentant l'interface suivante :
 
 ```java
-package com.example.demo.service;
+package fr.r402.service;
+import fr.r402.metier.Voiture;
 
-import com.example.demo.data.Voiture;
-
-public interface Statistique {
+public interface IStatistique {
 
     public void ajouter(Voiture voiture);
 
@@ -130,10 +362,18 @@ public interface Statistique {
      * 5% de remise supplémentaire sur chaque voiture à chaque fois que 5 voitures sont ajoutées
      * et une remise maxi de 20 000 euros.
      * @return le prix des voitures
-     * @throws ArithmeticException s'il n'y a pas de voiture
+     * @throws IllegalStateException s'il n'y a pas de voiture
      */
-    public int prix() throws ArithmeticException;
+    public double prix() throws IllegalStateException;
 
+
+    /**
+     * Retourne la voiture à la position i
+     * @param i position de la voiture en retourner
+     * @return (Voiture)
+     * @throws IndexOutOfBoundsException : Aucune voiture à la position indiqué
+     */
+    public Voiture getVoiture(int i) throws IndexOutOfBoundsException;
 }
 ```
 
@@ -143,6 +383,48 @@ Etudiez la technique de la matrice de test dans le cours sur les tests : https:/
 Etablir la matrice de tests.
 
 Ajouter à votre projet les tests définis dans la matrice de tests.
+
+
+1. Dessinez le diagramme de classes de l'application à cette étape.
+2. Ecrire la classe service `Statistique`qui implémente l'interface `IStatistique`.
+3. Ecrire la classe de tests.
+4. Lancez et faire passer les tests.
+5. Faire une demande de *pull request* au chef de projet.
+
+
+**2. Ce que doit faire le chef de projet :**
+
+1. Traiter la demande de *pull request*
+
+<img src="images/pull_request_pending.jpg" width="800"/>
+
+2. Vérifier que la fusion est possible :
+
+<img src="images/pull_request_pending_able_to_merge.jpg" width="600"/>
+
+3. Créer la demande de *pull request*
+   
+<img src="images/pull_request_create_pull_request.jpg" width="600"/>
+
+4. Vérifier que tous les tests automatisés passent avant d'accepter de fusionner la branche `newcarservice`avec la branche `main`
+  * Tous les indicateurs doivent être au vert
+
+
+
+<img src="images/pull_request_merge.jpg" width="600"/>
+
+
+**Après traitement de la demande de pull request**
+
+La nouvelle branche peut alors être effacée sur la machine du développeur et cell qui est chez Github :
+
+```
+git branch -D newcarservice
+```
+```
+git push origin --delete newcarservice
+```
+
 
 
 # TP 3
