@@ -15,7 +15,13 @@ https://drive.google.com/drive/folders/1RVLc4yg5IKTq3OSht6wm1Cdjq9jOLEqy?usp=sha
 
 >**Ressource de M. LEMAIRE:**
 >
-> [Introduction au cours de qualité de développement](https://e.pcloud.link/publink/show?code=XZRFxPZxa6jVeLys40yTU3p3RaEzXaheXuk=)
+> * [Introduction au cours de qualité de développement](https://e.pcloud.link/publink/show?code=XZRFxPZxa6jVeLys40yTU3p3RaEzXaheXuk=)
+>
+> * Support de cours concernant Git
+>   * [Support de cours sur Git](https://e.pcloud.link/publink/show?code=XZT45CZgsA2bvsKBefHmVhdgo3G9mlfDa3y)
+>   * [Création d'un dépôt Git](https://e.pcloud.link/publink/show?code=XZ3qthZaMGfUQCtTUR1zXO0O5jqnQVf5lQX)
+
+
 
 
 
@@ -87,8 +93,6 @@ Lancer le programme de test (clic droit sur la classe de test)
 > Tous les tests doivent passer (*être vert*)
 
 
-# TP2 : Intégration continue, développement et tests unitaires de la classe service
-
 **Faisons le point :**  Au début de cette partie vous avez écrits et fait passé tout vos tests unitaires
   
 Quelques exemples de tests unitaires : 
@@ -97,18 +101,30 @@ Quelques exemples de tests unitaires :
 
 
 
-## Etape 1 : Appropriation du projet
 
+# TP2 : Intégration continue, développement et tests unitaires de la classe service
+
+Nous allons développer une application Web en utilisant le framework SpringBoot pour faciliter le développement et les tests.
+
+* Voici quelques ressources utiles pour ce travail pratiques :
+  * Etude du framework de test Mockito: https://github.com/charroux/mockito
+  * **Ressources de M. LEMAIRE:**
+    * [Arborescence du projet SpringBoot](https://einfo-learning.fr/moodle/mod/page/view.php?id=12840)
+    * [Une application d'entreprise](https://e.pcloud.link/publink/show?code=XZDX0SZj25tahv9IL7yo7IbOIzr04Vdqjl7)
+
+1. Cloner le dépôt git suivant qui vous servira de point de départ pour cette partie du travail pratique :
+  * Etude du framework de test inclus dans les projets Spring boot : https://github.com/bouchaiblemaire/r402_2025_qual_dev_springboot.git
+
+
+**Remarque :** Ce projet contient une correction de la classe métier `Voiture`et de la classe de tests `VoitureTest`.
+
+
+**A lire jusqu'au bout AVANT DE COMMENCER !**
+
+## Etape 1 : Appropriation du projet
 
 Vous devez vous appropier ce projet, c'est-à-dire que **vous devez le déplacer vers un dépôt Git vous appartenant**.
 
-
-
->**Ressource de M. LEMAIRE:**
-> Support de cours concernant Git
-> [Support de cours sur Git](https://e.pcloud.link/publink/show?code=XZT45CZgsA2bvsKBefHmVhdgo3G9mlfDa3y)
->
->[Création d'un dépôt Git](https://e.pcloud.link/publink/show?code=XZ3qthZaMGfUQCtTUR1zXO0O5jqnQVf5lQX)
 
 
 ## **Voici quelques indications :**
@@ -121,12 +137,13 @@ Vous devez vous appropier ce projet, c'est-à-dire que **vous devez le déplacer
 * Le dépôt doit-être privée dans le cadre de ce travail pratique.
 * Le dépôt doit-être vide car nous allons l'initialiser avec notre dépôt local
     * ne pas cocher `Add a README file`
-    * ne pas ajouter de fichier `.gitingnore`
+    * ne pas ajouter de fichier `.gitignore`
    
 2. Déplacez-vous dans le dossier contenant votre projet sur votre machine
 
 <img src="images/deplacement_dans_projet_local.jpg" width="1000"/>
 
+**Note :** Nom du dossier à adapter avec le nom réel de votre dossier local contenant le projet.
 
 3. Initialiser votre dépôt distant avec votre dépôt local (ici c'est un exemple avec **mon** dépôt distant !)
 
@@ -156,7 +173,13 @@ et refaire le `git add remote`.
 4. Inscrivez votre enseignant comme *participant* de votre projet github.
 
 
-## **Etape 2 : Collaborer à un projet : le concept du pull request**
+**A ce point vous disposez de votre dépôt github correctement initialisé.**
+
+
+
+## Etape 2 : Vous allez vous mettre dans la peau d'un chef de projet et mettre en place les outils pour l'intégration continue
+
+**A LIRE JUSQU'AU BOUT !**
 
 **Le principe :**
 
@@ -167,7 +190,7 @@ et refaire le `git add remote`.
 * Le développeur en question va pousser sa branche vers le serveur distant Git et à ce moment-là les tests (de son code et du code déjà écrit) doivent être déclenchés **automatiquement côté serveur** :
     * Si les tests réussissent, le chef de projet (ou une personne autorisée) pourra alors fusionner les branches et les autres développeurs pourront alors télécharger la dernière version du code.
   
-Cette procédure qui part de l'initiative du développeur et qui se termine par la fusion des branches par le chef de projet si les tests réussissent est appelée *pull request*.
+> Cette procédure qui part de l'initiative du développeur et qui se termine par la fusion des branches par le chef de projet si les tests réussissent est appelée *pull request*.
 
 ### Comment les test tests sont automatisées côté serveur ? 
 
@@ -186,7 +209,7 @@ Quand un développeur collabore à un projet il procède de la façon suivante :
 
 **Remarques :** 
 * Pour ce travail pratique vous disposez déjà du dépôt local ! 
-* Vous pouvez jouer le rôle d'un nouveau développeur à clonant le dé^pot distant dans un aitre dossier de votre machine locale.
+* Vous pouvez jouer le rôle d'un nouveau développeur à clonant le dépôt distant dans un autre dossier de votre machine locale.
 
 2. le développeur créé une copie du projet afin de ne pas affecter le code qui est déjà en production (`git branch` et `git checkout`)
 
@@ -221,7 +244,7 @@ git checkout -b newcarservice
 Le chef de projet peut alors déclencher un processus d'**intégration continue** (CI) en lançant les procédures de tests écrit par le développeur :
 > c'est le pull request. Un script va alors être déclanché sur un serveur de test. 
 
-Si les tests du développeurs sont concluants, le chef de projet peut alors décider de fusionner la copie du développeur avec la version originale (`git marge`).
+Si les tests du développeurs sont concluants, le chef de projet peut alors décider de fusionner la copie du développeur avec la version originale (`git merge`).
 * Tous les développeurs doivent alors récupérer la mise à jour du code sur leur machine en faisant un `git pull`
 
 Et c'est là qu'on comprend le terme *pull request* qui est finalament une demande de pull faite par un développeur au chef de projet quand il a finit son travail.
@@ -230,7 +253,7 @@ Et c'est là qu'on comprend le terme *pull request* qui est finalament une deman
 
 
 
-### Voici les étapes que nous allons effectuer pour le développement de la couche service de l'application**
+## **Travail à faire**
 
 **A lire jusqu'au bout AVANT DE COMMENCER !**
 
@@ -277,7 +300,7 @@ A ce point du travail pratique le `workflow`doit s'exécuter sans erreur et **to
 
 Nous allons dans cette étape écrire la couche service et faire un demande de *pull request* pour rajouter cette couche au projet principal sur le serveur Git distant.
 
-Nous supposons avant de commencer cette étape que :
+**Nous supposons avant de commencer cette étape que :**
 * Vous avez créee et initialisé votre **dépôt distant**, une seule branche `main` existe.
 * Vous avez mis en place correctement les mécanismes d'intégration continue.
 
@@ -312,87 +335,159 @@ git checkout main
 git push -u origin newcarservice
 ```
 
-**Remarque :** Une demande de *pull request* sera ouverte aytomatiquement.
+**Remarque :** Une demande de *pull request* sera ouverte automatiquement.
 
 
-#### **C. Travail à faire le chef de projet, traiter la demande de pull request**
-
-A partir de là, vous jouez le rôle d'un chef de projet.
-
-1. Traiter le demande de *pull request*
-2. Accépter (dans le cas du travail pratique)  la demande de *pull request*
-  * la fusion de la nouvelle branche avec la branche `main` est effectuée (`git merge`)
-
-> Sur toutes les machines des développeurs (y-compris celle du développeur qui a soumis son code) afin de mettre à jour la branche main sinon le serveur Github n'acceptera pas de nouveau push au pretexte que le code n'est pas à jour
->```
->git pull origin main
->```
-
-
-3. La nouvelle branche peut alors être effacée sur la machine du développeur et cell qui est chez Github :
-
-```
-git branch -D newcarservice
-```
-```
-git push origin --delete newcarservice
-```
-
-
-
-### **Mise en pratique !**
+* Voici quelques ressources utiles pour ce travail pratiques :
+  * Etude du framework de test Mockito: https://github.com/charroux/mockito
+  * **Ressources de M. LEMAIRE:**
+    * [Mockito à la rescousse](https://e.pcloud.link/publink/show?code=XZHV0SZOWRt6RzqwhYaIsO1PCJEJykUpGpy)
+    * [Injection de dépendances](https://e.pcloud.link/publink/show?code=XZIc0SZaw1WrAlskWF7Te1aLf24Yf1w8H1y)
+  * **Autres ressources :**
+    * [Comprendre les annotations dans Spring Boot : guide et exemples](https://www.sfeir.dev/back/comprendre-les-annotations-dans-spring-boot/)
 
 
 **Développement de la couche service**
 
 **1. Ce que doit faire le développeur**
 
-Coder une classe de service en implémentant l'interface suivante :
+Vous disposez des interfaces et classes suivantes : 
 
+* Classe `Echantillon`
 ```java
-package fr.r402.service;
-import fr.r402.metier.Voiture;
+package com.example.springbootest.service;
 
-public interface IStatistique {
+/**
+ * Classe de données qui permet d'encpsulée de données
+ *   * Nombre de voitures
+ *   * Prix moyen de ce nombre de voiture(s)
+ */
+public class Echantillon {
 
-    public void ajouter(Voiture voiture);
+    int nombreDeVoitures;
+    int prixMoyen;
 
-    /**
-     * Calcul d'un prix dégressif en fonction du nombre de voitures :
-     * 5% de remise supplémentaire sur chaque voiture à chaque fois que 5 voitures sont ajoutées
-     * et une remise maxi de 20 000 euros.
-     * @return le prix des voitures
-     * @throws IllegalStateException s'il n'y a pas de voiture
-     */
-    public double prix() throws IllegalStateException;
+    public Echantillon(){}
 
+    public Echantillon(int nombreDeVoitures, int prixMoyen) {
+        this.nombreDeVoitures = nombreDeVoitures;
+        this.prixMoyen = prixMoyen;
+    }
 
-    /**
-     * Retourne la voiture à la position i
-     * @param i position de la voiture en retourner
-     * @return (Voiture)
-     * @throws IndexOutOfBoundsException : Aucune voiture à la position indiqué
-     */
-    public Voiture getVoiture(int i) throws IndexOutOfBoundsException;
+    public int getNombreDeVoitures() {
+        return nombreDeVoitures;
+    }
+
+    public void setNombreDeVoitures(int nombreDeVoitures) {
+        this.nombreDeVoitures = nombreDeVoitures;
+    }
+
+    public int getPrixMoyen() {
+        return prixMoyen;
+    }
+
+    public void setPrixMoyen(int prixMoyen) {
+        this.prixMoyen = prixMoyen;
+    }
 }
 ```
 
 
-Etudiez la technique de la matrice de test dans le cours sur les tests : https://drive.google.com/drive/folders/1RVLc4yg5IKTq3OSht6wm1Cdjq9jOLEqy?usp=sharing
-
-Etablir la matrice de tests.
-
-Ajouter à votre projet les tests définis dans la matrice de tests.
+* Interface `Statistique`
 
 
-1. Dessinez le diagramme de classes de l'application à cette étape.
-2. Ecrire la classe service `Statistique`qui implémente l'interface `IStatistique`.
-3. Ecrire la classe de tests.
-4. Lancez et faire passer les tests.
-5. Faire une demande de *pull request* au chef de projet.
+```java
+package com.example.springbootest.service;
+import com.example.springbootest.data.Voiture;
+
+public interface Statistique {
+
+package com.example.demo.service;
+
+import com.example.demo.data.Voiture;
+
+public interface Statistique {
+
+    public void ajouter(Voiture voiture);
+
+    public Echantillon prixMoyen() throws ArithmeticException;
+
+}
+```
+
+* La classe `StatistiqueImpl` qui implémente l'interface `Statistique` :
+
+```java
+package com.example.demo.service;
+
+import com.example.demo.data.Voiture;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+@Service
+public class StatistiqueImpl implements Statistique{
+
+    List<Voiture> voitures = new ArrayList<Voiture>();
+
+    @Override
+    public void ajouter(Voiture voiture) {
+        voitures.add(voiture);
+    }
+
+    @Override
+    public Echantillon prixMoyen() throws ArithmeticException {
+        int prixTotal = 0;
+        int nombreDeVoitures = 0;
+        Iterator<Voiture> iterator = voitures.iterator();
+        while(iterator.hasNext()){
+            prixTotal = prixTotal + iterator.next().getPrix();
+            nombreDeVoitures++;
+        }
+        return new Echantillon(nombreDeVoitures, prixTotal/nombreDeVoitures);
+    }
+}
+```
 
 
-**2. Ce que doit faire le chef de projet :**
+Votre tâche consiste à écrire la classe de test en utilisant le framework Mockito
+
+**Mais pourquoi faisons nous cela ?**
+
+La classe qui implémente l'interface `Statistique` utilise une `ArrayList` pour implémenter l'ensemble des voitures (agragation en UML entre la l'interface et la classe data `Voiture).
+> Cependant on aurait pu utiliser un tableau voire une base de donnée.<br>
+> On pourrait aussi ne pas disposer de l'implémentation de cet ensemble de voiture mais quand même vouloir mener à bien les tests unitaires de la classe service Statistique.
+
+**Alors comment faire ?**
+
+Pour cela on va simuler l'implémentation de la classe service StatistiqueImpl en utilisant le framework Mockito.
+
+
+
+
+```java
+package com.example.springbootest.service;
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+@SpringBootTest
+public class StatistiqueTest {
+    @MockBean
+    Statistique mockStatistique;
+
+    
+}
+
+```
+
+Et après ? Quand cette tâche sera terminé vous devrez initier une demande de *pull request* avec les fonctionnalités de cette branche.
+
+
+
+### **Ce que doit faire le chef de projet :**
 
 1. Traiter la demande de *pull request*
 
@@ -427,179 +522,40 @@ git push origin --delete newcarservice
 
 **3. Ce que doit faire le développeur**
 
-Mettre à jour sa branche `mail`
+Mettre à jour sa branche `main`
 
 ```
 git pull
 ```
 
-
 # TP 3
 
-Etude du framework de test inclus dans les projets Spring boot : https://github.com/charroux/springbootest
+## Le service Web
 
-Etude du framework de test Mockito: https://github.com/charroux/mockito
+L'application de la question précédente est utilisé la un service Web dont voici le code : https://github.com/charroux/testsLogiciel/blob/main/src/main/java/com/example/demo/web/StatistiqueController.java
 
+Votre travail consiste à écrire la classe de test correspondante : https://github.com/charroux/testsLogiciel/blob/main/src/test/java/com/example/demo/web/WebTests.java
 
+# TP 4
 
+## Tests de couverture de code
 
-## Présentation de l'application
+Le script d'intégration coninue qui s'exécute chez Github contient déjà un programme de couverture de code (voir à la fin l'instruction ./gradlew jacocoTestReport) : https://github.com/charroux/testsLogiciel/blob/main/.github/workflows/action.yml
 
-L'application à développer contient : 
+Vérifiez que votre script conient cette instruction et ajoutez-là si ce n'est pas le cas. 
 
-- une base de données.
-- un service Web
+Gradle (l'outil de compilation) requiert un plugin pour générer le rappprt de converture de code. 
+Ce plugin doit être indiqué par l'instruction (id 'org.barfuin.gradle.jacocolog' version '1.0.1') dans le fichier de configuration du projet (en ligne 6) : https://github.com/charroux/testsLogiciel/blob/main/build.gradle
 
-L'application est programmée en Java avec le framework Spring Boot (pour faciliter l'accès à la base de données ainsi 
-que le développement du service web).
+Quand le script d'intégration continue s'exécute le rapport généré contient les résultats de la couverture de code :
 
-Le but de l'application est de faire des statistiques sur des voitures.
+<img src="images/jacoco.png" width="500"/>
 
-## Récupération du projet
-
-L'application dont vous lisez le Readme actuellement ne vous appartient pas (vous n'êtes pas les proprétaires du dépôt git).
-Cependant, vous pouvez télécharger ce projet sur vos machines et ensuite l'uploader vers un de vos dépôts git.
-
->**Ressource de M. LEMAIRE:**
->Voici un tutoriel vidéo qui est suivie de la procédure détaillée commande par commande :
->
->[Tutoriel github]( https://e.pcloud.link/publink/show?code=XZ3qthZaMGfUQCtTUR1zXO0O5jqnQVf5lQX)
-
-
-Si vous n'avez pas utilisé Github depuis un moment, il se peut que le Token qui vous permet d'accéder à Github soit périmé.
-Dans ce cas, il faudra en génbérer un autre. La procédure est indiqué ici : https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
-Il faudra alors utiliser ce token à la place de votre mot de passe quand vous ferrez des commandes git.
-
-Démarrer le machine de l'école sous Linux.
-
-Attention ! sur les machines de l'IUT il faut se placer sur `/tmp` car cela ne fonctionne pas sur les dossiers personnels.
-```
-git clone https://github.com/charroux/qualiteDeDeveloppement
-```
-Se placer ensuite dans le dossier du projet:
-```
-cd qualiteDeDeveloppement
-```
-## Copie du projet dans un dépôt git qui vous appartient
-
-Durant les TP vous allez travailler en binôme. Créez un dépôt de code public mais vide dans Github (sans Readme, ni gitignore),
-puis recopier ce projet dans votre dépôt git en prodédant comme suit :
-```
-rm -rf .git
-git init
-git add *
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/[adresse .git de votre projet]
-git push -u origin main
-```
-
-## Edition du projet
-
-### Avec Intellij
-Lancer Intellij et ouvrir tout simplement le projet. 
-Cependant, sur les machines de l'IUT, la compilation du projet ne fonctionnera pas. 
-Ce n'est pas très génant pour compiler votre projet vous pourrez ke faire via une commande.
-
-### La phase de build incluant l'exécution des tests
-Le build du projet (se compilation) ainsi que le lancement des programmes de tests peuvent se faire en ligne de commend via  la commande: 
-```
-./gradlew build
-```
-Une vidéo de démonstration : https://e.pcloud.link/publink/show?code=XZIwqhZkSSA8vXtyWmbn0aEKkgsrJ5QBxlX
-
-Le consultation du rapport de test ce fait ici : build/reports/tests/test/index.html
-
-### Avec Eclipse 
-La version Eclipse de l'IUT n'ayant pas le plugin gradle, il n'est pas recommandé de l'utiliser.
-
-## Codage des classes de données, accès à la base de données
-
-### Codage d'une classe Voiture
-
-Une ébauche de la classe Voiture est donnée : https://github.com/charroux/qualiteDeDeveloppement/blob/main/src/main/java/com/example/demo/data/Voiture.java
-
-Elle contient déjà un identifiant qui va servir de clef primaire à une table dans la base de données (explications à venir).
-
-Ajoutez à cette classe les attributs :
- - une marque
- - un prix
- 
-### Tests unitaires de la classe Voiture
-Le dossier src/test/java contient déjà l'ébauche de la classe de test de la voiture. 
-Cette classe de test est appelée VoitureTest. Ajoutez à cette classe autant de méthodes que vous jugez utile pour 
-tester la classe Voiture. Vérifiez que les méthodes de la classe Voiture retournent les résultats attendus en utilisant la classe Assert du framework Spring dont voici la documentation :
-
-https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/util/Assert.html
-
-Sous Linux :
-```
-./gradlew build
-```
-Vérifier le rapport de test: build/reports/tests/test/index.html
-
-# TP 3
-
-## La base de données
-La base de données est HSQLDB. Elle s'exécute "En mémoire" pour ne pas avoir à démarrer un serveur de base de données tant qu'on est en mode développement.
-En conséquence, les données sont perdues dès que l'application s'arrête.
-
-## Cours sur l'accès à la une base de données en Java
-https://drive.google.com/drive/folders/1RVLc4yg5IKTq3OSht6wm1Cdjq9jOLEqy?usp=sharing
-
-## Accès à la base de données
-Pour permettre d'accéder par programmation à la base de données uns interface a déjà été programmée : https://github.com/charroux/qualiteDeDeveloppement/blob/main/src/main/java/com/example/demo/data/VoitureRepository.java
-
-Un exemple d'utilisation de cette interface est données dans le cours sur l'accès à la base de données. 
-
-Pour connaître l'ensemble des méthodes d'accès à la base de données, 
-étudier l'interface CRUD repository : https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html
-
-## Test de l'accès à la base de données
-Les tests à réaliser ici vont utiliser le framework de test Mockito : https://github.com/charroux/mockito
-
-Le dossier src/test/java (package data) contient l'ébauche du programme de test de la base de données :
-https://github.com/charroux/qualiteDeDeveloppement/blob/main/src/test/java/com/example/demo/data/BaseDeDonneesTests.java
-
-Ajoutez à cette classe autant de méthodes que vous jugez utile pour tester l'accès à la base de données. 
-
-# TP 4 : codage de la classe de service qui intègre la base de données
-
-L'application a développer sur la base des voitures calcule des statistiques sur les voitures.
-La base de cette application est une interface : https://github.com/charroux/qualiteDeDeveloppement/blob/main/src/main/java/com/example/demo/service/Statistique.java
-
-## Coder une classe de service
-
-Coder une classe qui implémente cette interface.
-La classe Echantillon doit retourner le nombre de voiture et leur prix moyen.
-
-Pour que cette classe puisse accéder à la base de données il suffit d'y ajouter :
+Ce rapport n'est pas très détaillé et donc pas très facile à exploiter ! Cependant, il est suffisant pour vous rendre compte si vos programmes de tests garantissent une bonne couverture de code. Si ce n'est pas le cas, à vous d'ajouter des cas de tests pour améliorer la couverture de code.
+Si vous souhaitez avec un rapport de couverture de code plus détaillé, vous pouvez lancer le test de couverture sur votre machine via : 
 
 ```
-@Autowired
-VoitureRepository voitureRepository;
+./gradlew jacocoTestReport
 ```
 
-## Tests de la classe de service
-
-Créer un package appelé service pour tester la classe de service et implementez-y un programme de test.
-
-# TP 5 : codage de l'interface Web
-
-## Cours sur les Web services Rest
-https://drive.google.com/drive/folders/1RVLc4yg5IKTq3OSht6wm1Cdjq9jOLEqy?usp=sharing
-
-## Codage d'un Web service
-
-Ajouter au dossier src un package appelé web.
-
-Coder une classe controller qui réagit à deux requêtes HTTP : 
-- GET sur /statistique et qui retourne un objet du type échantillon
-- POST qui permet d'ajouter une nouvelle voiture
-
-## Test du Web service
-
-Créer dans le dossier test un package web. Implentez-y une classe de test pour le Web service.
-
-
-**Sujet de M. CHARROUX révisé et complété par B. LEMAIRE dans le cadre des séances de travaux dirigés et pratiques de la ressource R402**
+Mais encore faut-il que votre machine dispose de Java JDK 17.
