@@ -211,7 +211,7 @@ Quand un développeur collabore à un projet il procède de la façon suivante :
 * Pour ce travail pratique vous disposez déjà du dépôt local ! 
 * Vous pouvez jouer le rôle d'un nouveau développeur à clonant le dépôt distant dans un autre dossier de votre machine locale.
 
-2. le développeur créé une copie du projet afin de ne pas affecter le code qui est déjà en production (`git branch` et `git checkout`)
+2. le développeur créé une copie du projet (eq. une branche) afin de ne pas affecter le code qui est déjà en production (`git branch` et `git checkout`)
 
 Exemple :
 
@@ -392,6 +392,7 @@ public class Echantillon {
 }
 ```
 
+**A faire :** Ajouter la méthode `equals` en vous aidant de l'IDE IntelliJ
 
 * Interface `Statistique`
 
@@ -450,11 +451,14 @@ public class StatistiqueImpl implements Statistique{
     }
 }
 ```
+**Important !** Le code Java précdent est un exemple d'implémentation pour vous aider à comprende l'interface publique (les services rendus) par une classe qui implémente l'interface `Statistique`!
 
 
-Votre tâche consiste à écrire la classe de test en utilisant le framework Mockito
+Votre tâche consiste à écrire la classe de test en utilisant le framework Mockito.
 
 **Mais pourquoi faisons nous cela ?**
+
+Pour améliorer votre comprénesion, vous pourrez dessiner le diagramme de classe de l'application.
 
 La classe qui implémente l'interface `Statistique` utilise une `ArrayList` pour implémenter l'ensemble des voitures (agragation en UML entre la l'interface et la classe data `Voiture).
 > Cependant on aurait pu utiliser un tableau voire une base de donnée.<br>
@@ -482,6 +486,8 @@ public class StatistiqueTest {
 }
 
 ```
+
+
 
 Et après ? Quand cette tâche sera terminé vous devrez initier une demande de *pull request* avec les fonctionnalités de cette branche.
 
