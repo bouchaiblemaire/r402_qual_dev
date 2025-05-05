@@ -113,7 +113,7 @@ Nous allons développer une application Web en utilisant le framework SpringBoot
     * [Une application d'entreprise](https://e.pcloud.link/publink/show?code=XZDX0SZj25tahv9IL7yo7IbOIzr04Vdqjl7)
 
 1. Cloner le dépôt git suivant qui vous servira de point de départ pour cette partie du travail pratique :
-  * Etude du framework de test inclus dans les projets Spring boot : https://github.com/bouchaiblemaire/r402_2025_qual_dev_springboot.git
+  * Etude du framework de test inclus dans les projets Spring boot : 
 
 
 **Remarque :** Ce projet contient une correction de la classe métier `Voiture`et de la classe de tests `VoitureTest`.
@@ -152,7 +152,7 @@ git init
 git add .
 git commit -m "first commit"
 git branch -M main
-git remote add origin https://github.com/bouchaiblemaire/r402_2025_qual_dev.git
+
 git push -u origin main
 ```
 
