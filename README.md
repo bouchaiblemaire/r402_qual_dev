@@ -403,12 +403,6 @@ import com.example.springbootest.data.Voiture;
 
 public interface Statistique {
 
-package com.example.demo.service;
-
-import com.example.demo.data.Voiture;
-
-public interface Statistique {
-
     public void ajouter(Voiture voiture);
 
     public Echantillon prixMoyen() throws ArithmeticException;
@@ -536,7 +530,13 @@ git pull
 
 # TP 3 : Développement et tests du service Web
 
-## Le service Web
+L'application est utilisé comme un service Web.
+
+Le code du contrôleur est donnée ci-desssous :
+
+```java
+
+```
 
 L'application de la question précédente est utilisé la un service Web dont voici le code : https://github.com/charroux/testsLogiciel/blob/main/src/main/java/com/example/demo/web/StatistiqueController.java
 
