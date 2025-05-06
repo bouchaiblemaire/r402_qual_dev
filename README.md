@@ -191,13 +191,13 @@ et refaire le `git add remote`.
 **A LIRE JUSQU'AU BOUT !**
 
 
-**Cette partie vous exlique le principe global du mécanisme d'intégration continue en se bassant sur un scénario :**
+**Cette partie vous exlique le principe global du mécanisme d'intégration continue en se basant sur un scénario :**
 
 * Quand un développeur apporte une modification au code il faut tester que son code n'est pas buggé et qu'il ne provoque pas d'erreur dans le code existant (test de non regression du code).
 
-**Règle :** Pour ne pas corrompre le code existant, **toutes modifications doit se faire dans une branche**.
+**Règle :** Pour ne pas corrompre le code existant, **toutes modifications doit se faire dans une branche git**.
 
-* Le développeur en question va pousser sa branche vers le serveur distant Git et à ce moment-là les tests (de son code et du code déjà écrit) doivent être déclenchés **automatiquement côté serveur** :
+* Quand la modification est terminée et que les tests saont validés, le développeur va pousser sa branche vers le serveur distant Git et à ce moment-là les tests (de son code et du code déjà écrit) doivent être déclenchés **automatiquement côté serveur** :
     * Si les tests réussissent, le chef de projet (ou une personne autorisée) pourra alors fusionner les branches et les autres développeurs pourront alors télécharger la dernière version du code.
   
 > Cette procédure qui part de l'initiative du développeur et qui se termine par la fusion des branches par le chef de projet si les tests réussissent est appelée *pull request*.
