@@ -100,6 +100,9 @@ Quelques exemples de tests unitaires :
 <img src="images/voituretest.jpg" width="600"/>
 
 
+---
+
+---
 
 
 # TP2 : Intégration continue, développement et tests unitaires de la classe service
@@ -107,21 +110,22 @@ Quelques exemples de tests unitaires :
 Nous allons développer une application Web en utilisant le framework SpringBoot pour faciliter le développement et les tests.
 
 * Voici quelques ressources utiles pour ce travail pratiques :
-  * Etude du framework de test Mockito: https://github.com/charroux/mockito
   * **Ressources de M. LEMAIRE:**
     * [Arborescence du projet SpringBoot](https://einfo-learning.fr/moodle/mod/page/view.php?id=12840)
     * [Une application d'entreprise](https://e.pcloud.link/publink/show?code=XZDX0SZj25tahv9IL7yo7IbOIzr04Vdqjl7)
 
-1. Cloner le dépôt git suivant qui vous servira de point de départ pour cette partie du travail pratique :
-  * Etude du framework de test inclus dans les projets Spring boot : https://github.com/bouchaiblemaire/r402_2025_qual_dev_springboot.git
 
+Cloner le dépôt git suivant qui vous servira de point de dépat pour cette partie du travail pratique :
+
+https://github.com/bouchaiblemaire/r402_2025_qual_dev_springboot.git
 
 **Remarque :** Ce projet contient une correction de la classe métier `Voiture`et de la classe de tests `VoitureTest`.
 
 
 **A lire jusqu'au bout AVANT DE COMMENCER !**
 
-## Etape 1 : Appropriation du projet
+## **Préparaton de votre dépôt git pour mettre en place l'intégration continue**
+### Etape 1 : Appropriation du projet
 
 Vous devez vous appropier ce projet, c'est-à-dire que **vous devez le déplacer vers un dépôt Git vous appartenant**.
 
@@ -167,21 +171,27 @@ et refaire le `git add remote`.
 
 <img src="images/init_remote_guhub_repository.jpg" width="800"/>
 
-
-
-
 4. Inscrivez votre enseignant comme *participant* de votre projet github.
 
 
 **A ce point vous disposez de votre dépôt github correctement initialisé.**
 
 
+### Etape 2 : Vous allez vous mettre dans la peau d'un chef de projet et mettre en place les outils pour l'intégration continue
 
-## Etape 2 : Vous allez vous mettre dans la peau d'un chef de projet et mettre en place les outils pour l'intégration continue
+
+
+---
+
+---
+
+
+**Le principe :**
 
 **A LIRE JUSQU'AU BOUT !**
 
-**Le principe :**
+
+**Cette partie vous exlique le principe globale du mécanisme d'intégration continue en se bassant sur un scénario :**
 
 * Quand un développeur apporte une modification au code il faut tester que son code n'est pas buggé et qu'il ne provoque pas d'erreur dans le code existant (test de non regression du code).
 
@@ -192,7 +202,7 @@ et refaire le `git add remote`.
   
 > Cette procédure qui part de l'initiative du développeur et qui se termine par la fusion des branches par le chef de projet si les tests réussissent est appelée *pull request*.
 
-### Comment les test tests sont automatisées côté serveur ? 
+### Comment les tests sont automatisées côté serveur ? 
 
 #### Github actions
 
@@ -216,13 +226,13 @@ Quand un développeur collabore à un projet il procède de la façon suivante :
 Exemple :
 
 ```
-git branch newcarservice
-git checkout newcarservice
+git branch nouvelle_fonctionnalite
+git checkout nouvelle_fonctionnalite
 ```
 
 ou en une seule commande :
 ```
-git checkout -b newcarservice
+git checkout -b nouvelle_fonctionnalite
 ```
 
 **Note :** Vous le ferez dans la partie *développement de la couche service*
@@ -251,13 +261,31 @@ Et c'est là qu'on comprend le terme *pull request* qui est finalament une deman
 
 **En conclusion :** Dès lors que le code est testé sur les serveurs de github, le code est disponible auprès des autres développeurs de l'équipe.
 
+---
+
+---
 
 
 ## **Travail à faire**
 
-**A lire jusqu'au bout AVANT DE COMMENCER !**
+**Objectifs :**
 
-#### **A. Travail à faire par le chef de projet,  mise en place du processus d'intégration contenue**
+Nous allons mettre en pratique le mécanisme d'intégration continue selon 2 scénarios :
+
+* **Partie 1 :** Les membres de l'équipe ont pu développer la classe `StatistiqueImpl`
+* **Partie 2 :** Les membres de l'équipe n'ont pas encore  développé la classe `StatistiqueImpl`
+  
+Dans les deux cas où il faut réaliser les tests de la classe `StatistiqueImpl`.
+
+La question que vous pouvez vous poser dès à présent, concerne la *partie 2*...
+
+> *Comment écrire des tests sur une classe qui n'a pas encore été ecrite ?*<br>
+> C'est là que le framework *Mockito* va jouer un rôle important !
+
+
+---
+
+### **Travail à faire par le chef de projet,  mise en place du processus d'intégration continue**
 
 1. Connectez-vous sur votre dépôt distant en utilisant l'interface Web de Github et cliquez sur le bouton `Actions`
 
@@ -296,60 +324,10 @@ Dans l'exemple suivant, l'erreur de droit d'exécution sur le fichier `gradlew` 
 A ce point du travail pratique le `workflow`doit s'exécuter sans erreur et **tous les indicateurs doivent être vert**.
 
 
-#### **B. Travail à faire par le développeur, écriture de la couche service**
-
-Nous allons dans cette étape écrire la couche service et faire un demande de *pull request* pour rajouter cette couche au projet principal sur le serveur Git distant.
-
-**Nous supposons avant de commencer cette étape que :**
-* Vous avez créee et initialisé votre **dépôt distant**, une seule branche `main` existe.
-* Vous avez mis en place correctement les mécanismes d'intégration continue.
-
-Votre projet contient :
-* La classe métier `Voiture` dans le fichier java `Voiture.java`
-* La classe de tests `VoitureTest` dans le fichier java `VoitureTest.java`
+---
 
 
-1. Créer une nouvelle branche sur votre machine locale:
-```
-git branch newcarservice
-```
-2. Se déplacer vers la nouvelle branche:
-```
-git checkout newcarservice
-```
-3. Ajouter les fonctionnalités de la couche service ainsi que les tests unitaires associés (voir plus loin *développement de la couche service*).
-   
-4. Faire passer tous les tests, ils doivent être tous vert.
-   
-5. Mettre à jour le dépôt local en *committant* les modifications :
-```
-git add .
-git commit -a -m "newcarservice"
-```
-6. Se remettre sur la branche `main` de votre dépôt local
-```
-git checkout main
-```
-7. Envoyer les changements vers GitHub :
-```
-git push -u origin newcarservice
-```
-
-**Remarque :** Une demande de *pull request* sera ouverte automatiquement.
-
-
-* Voici quelques ressources utiles pour ce travail pratiques :
-  * Etude du framework de test Mockito: https://github.com/charroux/mockito
-  * **Ressources de M. LEMAIRE:**
-    * [Mockito à la rescousse](https://e.pcloud.link/publink/show?code=XZHV0SZOWRt6RzqwhYaIsO1PCJEJykUpGpy)
-    * [Injection de dépendances](https://e.pcloud.link/publink/show?code=XZIc0SZaw1WrAlskWF7Te1aLf24Yf1w8H1y)
-  * **Autres ressources :**
-    * [Comprendre les annotations dans Spring Boot : guide et exemples](https://www.sfeir.dev/back/comprendre-les-annotations-dans-spring-boot/)
-
-
-**Développement de la couche service**
-
-**1. Ce que doit faire le développeur**
+### **Travail à faire par le développeur**
 
 Vous disposez des interfaces et classes suivantes : 
 
@@ -448,42 +426,58 @@ public class StatistiqueImpl implements Statistique{
 **Important !** Le code Java précdent est un exemple d'implémentation pour vous aider à comprende l'interface publique (les services rendus) par une classe qui implémente l'interface `Statistique`!
 
 
-Votre tâche consiste à écrire la classe de test en utilisant le framework Mockito.
 
-**Mais pourquoi faisons nous cela ?**
 
-Pour améliorer votre comprénesion, vous pourrez dessiner le diagramme de classe de l'application.
-
-La classe qui implémente l'interface `Statistique` utilise une `ArrayList` pour implémenter l'ensemble des voitures (agragation en UML entre la l'interface et la classe data `Voiture).
-> Cependant on aurait pu utiliser un tableau voire une base de donnée.<br>
-> On pourrait aussi ne pas disposer de l'implémentation de cet ensemble de voiture mais quand même vouloir mener à bien les tests unitaires de la classe service Statistique.
-
-**Alors comment faire ?**
-
-Pour cela on va simuler l'implémentation de la classe service StatistiqueImpl en utilisant le framework Mockito.
+**A lire jusqu'au bout AVANT DE COMMENCER !**
 
 
 
+---
 
-```java
-package com.example.springbootest.service;
+#### **Partie 1 : Travail à faire par le développeur**
 
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+On se situe dans le scénario de **partie 1** où toutes les classes ont été développées et où il s'agit d'écrire la classe de tests.
 
-@SpringBootTest
-public class StatistiqueTest {
-    @MockBean
-    Statistique mockStatistique;
+**Principale étapes**
+1. Dessiner le diagramme de classe de l'application
+2. Créer une branche `newcarservicempl` et  écrire les tests de la classe `Statistique`.
+3. Faire passer les tests.
+4. Faire un *pull request* mais vous prendrez soin de ne pas effacer cette branche lorsque que le chef de projet aura acceptée votre demande de *pull request* (pour la garder à des fins de révisions).
 
-    
-}
 
+---
+
+**A vous de jouer :**
+
+1. Créer une nouvelle branche sur votre machine locale:
+```
+git branch newcarservicempl
+```
+2. Se déplacer vers la nouvelle branche:
+```
+git checkout newcarservicempl
+```
+3. Ajouter les fonctionnalités de la couche service et écrire les tests unitaires associés
+   
+4. Faire passer tous les tests, ils doivent être tous vert.
+   
+5. Mettre à jour le dépôt local en *committant* les modifications :
+```
+git add .
+git commit -a -m "newcarservicempl"
+```
+1. Se remettre sur la branche `main` de votre dépôt local
+```
+git checkout main
+```
+1. Envoyer les changements vers GitHub :
+```
+git push -u origin newcarservicempl
 ```
 
+**Remarque :** Une demande de *pull request* sera ouverte automatiquement.
 
 
-Et après ? Quand cette tâche sera terminé vous devrez initier une demande de *pull request* avec les fonctionnalités de cette branche.
 
 
 
@@ -511,14 +505,16 @@ Et après ? Quand cette tâche sera terminé vous devrez initier une demande de 
 
 **Après traitement de la demande de pull request**
 
-La nouvelle branche peut alors être effacée sur la machine du développeur et cell qui est chez Github :
+La nouvelle branche peut alors être effacée sur la machine du développeur et celle qui est chez Github :
 
 ```
-git branch -D newcarservice
+git branch -D newcarservicempl
 ```
 ```
-git push origin --delete newcarservice
+git push origin --delete newcarservicempl
 ```
+
+**Notes :** Ne pas le faire dans le cadre de ce travail pratique à des fins de révisions.
 
 **3. Ce que doit faire le développeur**
 
@@ -527,6 +523,90 @@ Mettre à jour sa branche `main`
 ```
 git pull
 ```
+
+
+---
+
+#### **Partie 2 : Travail à faire par le développeur**
+
+
+On se situe dans le scénario de **partie 2** où les développeurs n'ont pas encore développer la classe `StatistiqueImpl`.
+
+* Voici quelques ressources utiles pour ce travail pratiques :
+  * Etude du framework de test Mockito: https://github.com/charroux/mockito
+  * **Ressources de M. LEMAIRE:**
+    * [Mockito à la rescousse](https://e.pcloud.link/publink/show?code=XZHV0SZOWRt6RzqwhYaIsO1PCJEJykUpGpy)
+    * [Injection de dépendances](https://e.pcloud.link/publink/show?code=XZIc0SZaw1WrAlskWF7Te1aLf24Yf1w8H1y)
+  * **Autres ressources :**
+    * [Comprendre les annotations dans Spring Boot : guide et exemples](https://www.sfeir.dev/back/comprendre-les-annotations-dans-spring-boot/)
+
+
+**Votre tâche consiste à écrire la classe de test en utilisant le framework Mockito**
+
+* Voici quelques ressources utiles pour ce travail pratiques :
+  * Etude du framework de test Mockito: https://github.com/charroux/mockito
+
+**Mais pourquoi faisons nous cela ?**
+
+La classe qui implémente l'interface `Statistique` utilise une `ArrayList` pour implémenter l'ensemble des voitures (agragation en UML entre la l'interface et la classe data `Voiture).
+> Cependant on aurait pu utiliser un tableau voire une base de donnée.<br>
+> On pourrait aussi ne pas disposer de l'implémentation de cet ensemble de voiture mais quand même vouloir mener à bien les tests unitaires de la classe service Statistique.
+
+**Alors comment faire ?**
+
+Pour cela on va simuler l'implémentation de la classe service `StatistiqueImpl` en utilisant le framework Mockito.
+
+
+> Mockito va faire passer les tests en simulant les services que devrait rendre la classe `StatistiqueImpl` !
+
+*Sur quoi se base Mockito pour faire sa simulation ?*
+
+>Mockito va s'appuyer sur l'interface `Statistique` pour connaître :
+>* Les opérations à simuler pour faire passer les tests
+>* Ce qui est attendu.
+
+
+
+**Voici une ébauche  de la classe de tests :**
+
+```java
+package com.example.springbootest.service;
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+@SpringBootTest
+public class StatistiqueTest {
+    @MockBean   // <----  indique que mockStatistique est un mock qui va simuler les opérations de l'interface Statistique
+    Statistique mockStatistique;
+
+    @Test
+    public void un_exemple_de_test(){
+      // Arrange
+      // On programme la simulation
+
+      // Act
+      // On lance les services à tester
+
+
+      // Assert
+      // On valide les tests
+
+
+
+    }
+
+    
+}
+
+```
+En suivant la même démarche que la **partie 1** pour la mise la préparation de votre environnement de développement ; écrire la classe de tests en utilisant le framework Mockito pour simuler le comportement des opérations attendues par l'interface `Statistique`.
+
+**Principale étapes**
+1. Dessiner le diagramme de classe de l'application
+2. Créer une branche `newcarservicemockito` et  écrire les tests de la classe `Statistique`.
+3. Faire passer les tests.
+4. Faire un *pull request* mais vous prendrez soin de ne pas effacer cette branche lorsque que le chef de projet aura acceptée votre demande de *pull request* (pour la garder à des fins de révisions).
 
 # TP 3 : Développement et tests du service Web
 
