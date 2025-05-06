@@ -191,7 +191,7 @@ et refaire le `git add remote`.
 **A LIRE JUSQU'AU BOUT !**
 
 
-**Cette partie vous exlique le principe globale du mécanisme d'intégration continue en se bassant sur un scénario :**
+**Cette partie vous exlique le principe global du mécanisme d'intégration continue en se bassant sur un scénario :**
 
 * Quand un développeur apporte une modification au code il faut tester que son code n'est pas buggé et qu'il ne provoque pas d'erreur dans le code existant (test de non regression du code).
 
