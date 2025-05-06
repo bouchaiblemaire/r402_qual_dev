@@ -197,7 +197,7 @@ et refaire le `git add remote`.
 
 **Règle :** Pour ne pas corrompre le code existant, **toutes modifications doit se faire dans une branche git**.
 
-* Quand la modification est terminée et que les tests saont validés, le développeur va pousser sa branche vers le serveur distant Git et à ce moment-là les tests (de son code et du code déjà écrit) doivent être déclenchés **automatiquement côté serveur** :
+* Quand la modification est terminée et que les tests sont validés, le développeur va pousser sa branche vers le serveur distant Git et à ce moment-là les tests (de son code et du code déjà écrit) doivent être déclenchés **automatiquement côté serveur** :
     * Si les tests réussissent, le chef de projet (ou une personne autorisée) pourra alors fusionner les branches et les autres développeurs pourront alors télécharger la dernière version du code.
   
 > Cette procédure qui part de l'initiative du développeur et qui se termine par la fusion des branches par le chef de projet si les tests réussissent est appelée *pull request*.
@@ -209,7 +209,10 @@ et refaire le `git add remote`.
 Côté serveur, Github peut exécuter des tâches automatiquement comme lancer les tests. Pour cela **il faut configurer une action**.
 
 
-### **En ce qui concerne un développeur de l'équipe de projet**
+
+### **Maintenant on va détailler plus précisemment les étapes précédentes avec les commandes qui sont exécutées**
+
+#### **En ce qui concerne un développeur de l'équipe de projet**
 
 Quand un développeur collabore à un projet il procède de la façon suivante : 
 
@@ -249,7 +252,7 @@ git checkout -b nouvelle_fonctionnalite
 
 
 
-### **En ce qui concerne le chef de projet**
+#### **En ce qui concerne le chef de projet**
 
 Le chef de projet peut alors déclencher un processus d'**intégration continue** (CI) en lançant les procédures de tests écrit par le développeur :
 > c'est le pull request. Un script va alors être déclanché sur un serveur de test. 
