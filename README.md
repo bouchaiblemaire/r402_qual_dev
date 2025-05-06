@@ -217,7 +217,7 @@ Côté serveur, Github peut exécuter des tâches automatiquement comme lancer l
 Quand un développeur collabore à un projet il procède de la façon suivante : 
 
 1. le développeur récupère le projet sur sa machine (`git clone`)
-    * Il créer un dépot local dans sa machine
+    * Il crée un dépot local dans sa machine
   
 
 **Remarques :** 
@@ -248,7 +248,7 @@ git checkout -b nouvelle_fonctionnalite
   
 4. Le développeur écrit aussi les programmes de tests qui valident son travail
    
-5. Et enfin le développeur envoie sa copie du code vers le serveur distant git pour partager ses midifications/ajouts (git push)
+5. Et enfin le développeur envoie sa copie du code vers le serveur distant git pour partager ses midifications/ajouts (`git push`)
 
 
 
@@ -282,7 +282,7 @@ Dans les deux cas où il faut réaliser les tests de la classe `StatistiqueImpl`
 
 La question que vous pouvez vous poser dès à présent, concerne la *partie 2*...
 
-> *Comment écrire des tests sur une classe qui n'a pas encore été ecrite ?*<br>
+> *Comment écrire des tests sur une classe qui n'a pas encore été écrite ?*<br>
 > C'est là que le framework *Mockito* va jouer un rôle important !
 
 
@@ -552,15 +552,16 @@ On se situe dans le scénario de **partie 2** où les développeurs n'ont pas en
 **Mais pourquoi faisons nous cela ?**
 
 La classe qui implémente l'interface `Statistique` utilise une `ArrayList` pour implémenter l'ensemble des voitures (agragation en UML entre la l'interface et la classe data `Voiture).
-> Cependant on aurait pu utiliser un tableau voire une base de donnée.<br>
-> On pourrait aussi ne pas disposer de l'implémentation de cet ensemble de voiture mais quand même vouloir mener à bien les tests unitaires de la classe service Statistique.
+> * Cependant on aurait pu utiliser un tableau voire une base de donnée.<br>
+> * On pourrait aussi **ne pas disposer de l'implémentation de cet ensemble de voitures mais quand même vouloir mener à bien les tests unitaires** de la classe service `Statistique`.
 
 **Alors comment faire ?**
 
-Pour cela on va simuler l'implémentation de la classe service `StatistiqueImpl` en utilisant le framework Mockito.
+Pour cela on va **simuler l'implémentation** de la classe service `StatistiqueImpl` en utilisant le framework *Mockito* et en se basant sur **son interface publique** (eq. les méthodes pupliques)
 
 
-> Mockito va faire passer les tests en simulant les services que devrait rendre la classe `StatistiqueImpl` !
+Mockito va faire passer les tests en simulant les services que devrait rendre la classe `StatistiqueImpl` !
+
 
 *Sur quoi se base Mockito pour faire sa simulation ?*
 
