@@ -736,34 +736,57 @@ jobs:
 
 
 
-**Couverture de code**
-
-Le projet est configuré pour assurer une analyse de la couverture de code avec le framework *JaCoCo*.
-
-Les tests de couverture de code consistent à vérifier que les programmes de tests activent toutes les instructions des programme à tester.
-
-**Couverture de code côté station de développement**
-
-Vous pouvez lancer un test de couverture de code en faisant un clic droit sur un programnme de test et en lançant : `test with coverage`.
-
-**Couverture de code côté serveur (cas d'un projet Gradle)**
-
-Il est possible de modifier la configuration du projet pour que les tests de couverture de code se lancent lors d'un *pull request*. Il y a plusieurs librairies qui réalisent des tests de couverture de code. Ici, c'est JaCoCo qui est utilisée : https://www.jacoco.org/jacoco/
-
-* Configuration de Gradle : La configuration de JaCoCo se fait dans le fichier de configuration de Gradle `build.gradle`
-
-* Configuration du *workflow* sur github.
-
-Lors d'un *pull request* le tests de couverture de code vont être lancés et un rapport d'exécution sera émis côté sur le site de Github :
-
-<img width="400px" height="auto" src="images/rapport_jacoco.jpg"/>
-
 ## Partie 2 : Créer la branche `voiture_data`
 
 1. Développer la classe `Voiture` ainsi que sa classe de tests
 
 2. Faire passer les tests dans le cadre d'une demande de *pull request*<br>
    Description de la demande de *pull request* : `Ajout de la classe métier`
+
+
+
+
+
+**Couverture de code**
+
+
+
+Les tests de couverture de code consistent à vérifier que les programmes de tests activent toutes les instructions des programme à tester.
+
+* **Couverture de code côté station de développement**
+
+Vous pouvez lancer un test de couverture de code en faisant un clic droit sur un programnme de test et en lançant : `test with coverage`.
+
+* **Couverture de code côté serveur (cas d'un projet Gradle)**
+
+Il est possible de modifier la configuration du projet pour que les tests de couverture de code se lancent lors d'un *pull request*. Il y a plusieurs librairies qui réalisent des tests de couverture de code. Ici, c'est JaCoCo qui est utilisée : https://www.jacoco.org/jacoco/
+
+* Configuration de Gradle : La configuration de JaCoCo se fait dans le fichier de configuration de Gradle `build.gradle`
+  * Gradle (l'outil de compilation) requiert un plugin pour générer le rapport de converture de code. Ce plugin doit être indiqué par l'instruction (id 'jacoco' ) dans le fichier de configuration du projet `build.gradle`
+* Configuration du *workflow* sur github.
+  * Le script d'intégration continue qui s'exécute chez Github contient déjà un programme de couverture de code (voir à la fin la commande `./gradlew jacocoTestReport`)
+
+ 
+
+Lors d'un *pull request* le tests de couverture de code vont être lancés et un rapport d'exécution sera émis côté sur le site de Github :
+
+<img width="400px" height="auto" src="images/rapport_jacoco.jpg"/>
+
+
+Ce rapport n'est pas très détaillé et donc pas très facile à exploiter ! Cependant, il est suffisant pour vous rendre compte si vos programmes de tests garantissent une bonne couverture de code. Si ce n'est pas le cas, à vous d'ajouter des cas de tests pour améliorer la couverture de code.
+Si vous souhaitez avec un rapport de couverture de code plus détaillé, vous pouvez lancer le test de couverture sur votre machine via : 
+
+```
+./gradlew jacocoTestReport
+```
+
+Mais encore faut-il que votre machine dispose de Java JDK 17.
+
+**Notes :**
+* Votre projet est déjà configuré pour utiliser le framework `JaCoCo`
+* Le script pour le workflow (côté serveur) fourni dans le sujet contient la configuration adéquate pour réaliser la couverture de test.
+
+Vous devrez repérez les lignes qui permettent ces configurations dans le fichier `build.gradle` (sur votre machine) et le fichier de configuration de *workflow* (côté Github).
 
 
 
@@ -805,38 +828,48 @@ Etudier ensuite la documentation pour savoir comment configurer une suite de tes
 
 # TP 4 : Développement et tests du service Web
 
-L'application est utilisé comme un service Web.
+L'application développée sera utilisé comme un service Web.
 
-Le code du contrôleur est donnée ci-desssous :
+Le code du contrôleur est donnée ci-dessous :
 
 ```java
+@RestController
+public class StatistiqueController {
 
+    @Autowired
+    Statistique statistique;
+
+    @GetMapping(value = "/statistique")
+    public Echantillon getStatistiques() throws PasDeVoitureException {
+        try{
+            return statistique.prixMoyen();
+        } catch (ArithmeticException e) {
+            throw new PasDeVoitureException();
+        }
+
+    }
+
+    @PostMapping("/voiture")
+    public void creerVoiture(@RequestBody Voiture voiture){
+        statistique.ajouter(voiture);
+    }
+
+}
 ```
 
-L'application de la question précédente est utilisé la un service Web dont voici le code : https://github.com/charroux/testsLogiciel/blob/main/src/main/java/com/example/demo/web/StatistiqueController.java
 
 Votre travail consiste à écrire la classe de test correspondante : https://github.com/charroux/testsLogiciel/blob/main/src/test/java/com/example/demo/web/WebTests.java
 
-# TP 4
+```java
+@SpringBootTest
+@AutoConfigureMockMvc
+class WebTests {
 
-## Tests de couverture de code
+    @MockBean
+    StatistiqueImpl statistiqueImpl;
 
-Le script d'intégration coninue qui s'exécute chez Github contient déjà un programme de couverture de code (voir à la fin l'instruction ./gradlew jacocoTestReport) : https://github.com/charroux/testsLogiciel/blob/main/.github/workflows/action.yml
+    @Autowired
+    MockMvc mockMvc;
 
-Vérifiez que votre script conient cette instruction et ajoutez-là si ce n'est pas le cas. 
-
-Gradle (l'outil de compilation) requiert un plugin pour générer le rappprt de converture de code. 
-Ce plugin doit être indiqué par l'instruction (id 'org.barfuin.gradle.jacocolog' version '1.0.1') dans le fichier de configuration du projet (en ligne 6) : https://github.com/charroux/testsLogiciel/blob/main/build.gradle
-
-Quand le script d'intégration continue s'exécute le rapport généré contient les résultats de la couverture de code :
-
-<img src="images/jacoco.png" width="500"/>
-
-Ce rapport n'est pas très détaillé et donc pas très facile à exploiter ! Cependant, il est suffisant pour vous rendre compte si vos programmes de tests garantissent une bonne couverture de code. Si ce n'est pas le cas, à vous d'ajouter des cas de tests pour améliorer la couverture de code.
-Si vous souhaitez avec un rapport de couverture de code plus détaillé, vous pouvez lancer le test de couverture sur votre machine via : 
-
+}
 ```
-./gradlew jacocoTestReport
-```
-
-Mais encore faut-il que votre machine dispose de Java JDK 17.
