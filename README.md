@@ -612,7 +612,155 @@ En suivant la même démarche que la **partie 1** pour la mise la préparation d
 3. Faire passer les tests.
 4. Faire un *pull request* mais vous prendrez soin de ne pas effacer cette branche lorsque que le chef de projet aura acceptée votre demande de *pull request* (pour la garder à des fins de révisions).
 
-# TP 3 : Développement et tests du service Web
+
+
+# TP3 : Nous allons faire une répétition générale de tous les travaux effectuées
+
+
+
+**La construction et les tests du projet se feront sur github et non sur la machine locale.**
+
+
+## Partie 1 : Appropriation du projet
+
+1. CLoner le dépôt https://github.com/bouchaiblemaire/r402_2025_qual_dev_springboot_sujet_etudiant.git
+
+2. Vous l'approprier. Votre dépôt devra être privée
+
+3. Créer l'action `Java CI with gradle` et vérifier que le *workflow* se lance correctement
+   
+Vérifiez que les étapes (*steps*) Listées ci-dessous apparaissent bien dans votre fichier de configuration `gradle.yml`.
+
+```xml
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Grant execute permissions to Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Run test
+        run: |
+          export SHELL=/bin/bash
+          chmod u+x ./gradlew
+          ./gradlew test -i | grep -E " > |BUILD"
+          ./gradlew jacocoTestReport
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Grant execute permissions to Gradle wrapper
+      run: chmod +x gradlew
+        
+    # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
+    # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+    - name: Build with Gradle Wrapper
+      run: ./gradlew build
+
+    # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
+    # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
+    #
+    # - name: Setup Gradle
+    #   uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+    #   with:
+    #     gradle-version: '8.9'
+    #
+    # - name: Build with Gradle 8.9
+    #   run: gradle build
+
+  dependency-submission:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
+    # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
+    - name: Generate and submit dependency graph
+      uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+```
+
+
+
+4. Ajouter votre enseignant comme participant à votre dépôt
+
+
+## Partie 2 : Créer la branche `voiture_data`
+
+1. Développer la classe `Voiture` ainsi que sa classe de tests
+
+2. Faire passer les tests dans le cadre d'une demande de *pull request*<br>
+   Description de la demande de *pull request* : `Ajout de la classe métier`
+
+
+
+
+## Partie 3 : Créer la branche `service_with_statistique_mock`
+
+1. Développer le service `Statistique` en simulant la dépendance à l'ensemble des voitures par un *mock"
+2. Procéder comme précédement pour valider votre développement
+
+## Partie 4 : Créer la branche `service_with_statistique_implementation`
+
+Subsituer la simulation par la classe `StatistiqueImpl`
+
+1. Développer la classe `StatistiqueImpl`
+2. Procéder comme précemment pour faire passer les tests
+   
+
+
+
+# TP 4 : Développement et tests du service Web
 
 L'application est utilisé comme un service Web.
 
