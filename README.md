@@ -858,7 +858,7 @@ public class StatistiqueController {
 ```
 
 
-Votre travail consiste à écrire la classe de test correspondante : https://github.com/charroux/testsLogiciel/blob/main/src/test/java/com/example/demo/web/WebTests.java
+Votre travail consiste à écrire la classe de test correspondante `WebTests.java` :
 
 ```java
 @SpringBootTest
