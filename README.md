@@ -623,7 +623,7 @@ En suivant la même démarche que la **partie 1** pour la mise la préparation d
 
 ## Partie 1 : Appropriation du projet
 
-1. CLoner le dépôt https://github.com/bouchaiblemaire/r402_2025_qual_dev_springboot_sujet_etudiant.git
+1. Cloner le dépôt https://github.com/bouchaiblemaire/r402_2025_qual_dev_springboot_sujet_etudiant.git
 
 2. Vous l'approprier. Votre dépôt devra être privée
 
@@ -735,6 +735,29 @@ jobs:
 4. Ajouter votre enseignant comme participant à votre dépôt
 
 
+
+**Couverture de code**
+
+Le projet est configuré pour assurer une analyse de la couverture de code avec le framework *JaCoCo*.
+
+Les tests de couverture de code consistent à vérifier que les programmes de tests activent toutes les instructions des programme à tester.
+
+**Couverture de code côté station de développement**
+
+Vous pouvez lancer un test de couverture de code en faisant un clic droit sur un programnme de test et en lançant : `test with coverage`.
+
+**Couverture de code côté serveur (cas d'un projet Gradle)**
+
+Il est possible de modifier la configuration du projet pour que les tests de couverture de code se lancent lors d'un *pull request*. Il y a plusieurs librairies qui réalisent des tests de couverture de code. Ici, c'est JaCoCo qui est utilisée : https://www.jacoco.org/jacoco/
+
+* Configuration de Gradle : La configuration de JaCoCo se fait dans le fichier de configuration de Gradle `build.gradle`
+
+* Configuration du *workflow* sur github.
+
+Lors d'un *pull request* le tests de couverture de code vont être lancés et un rapport d'exécution sera émis côté sur le site de Github :
+
+<img width="400px" height="auto" src="images/rapport_jacoco.jpg"/>
+
 ## Partie 2 : Créer la branche `voiture_data`
 
 1. Développer la classe `Voiture` ainsi que sa classe de tests
@@ -758,6 +781,26 @@ Subsituer la simulation par la classe `StatistiqueImpl`
 2. Procéder comme précemment pour faire passer les tests
    
 
+## Partie 5 : Créer une suite de tests
+
+Cas d'un projet Java
+Il est possible de lancer les tests de plusieurs classes de tests via une "test suite".
+
+Pour cela il faut inclure dans le projet une nouvelle librairie, pour cela ajouter la dépendance suivante dans le fichier `build.gradle`
+```
+dependencies {
+  ...
+testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.2'
+}
+```
+
+1. Créer la branche `tests_suite`
+Développer la classe de tests `ApplicationSuiteTest permettant de tester l'application dans son ensemble dans son état actuelle de développement.
+2. Procéder comme précedemment pour faire passer les tests.
+
+**Ressources :**
+Etudier ensuite la documentation pour savoir comment configurer une suite de tests : https://junit.org/junit5/docs/current/user-guide/#junit-platform-suite-engine-example
 
 
 # TP 4 : Développement et tests du service Web
